@@ -313,19 +313,18 @@ class rect(pygame.Rect):
         if self.visible == True:
             pygame.draw.rect(gameDisplay, self.color, self)
 
-    def destroy(self):
+    def destroy(self) -> None:
         spriteList.remove(self)
         del (self)
 
     def collide(self, otherRect) -> bool:
-        if other is None:
+        if otherRect is None:
             return False
         this_rect = self.rotatedImage.get_rect(topleft=(self.x, self.y))
-        if not isinstance(other, rect):
-            other_rect = other.rotatedImage.get_rect(topleft=(other.x, other.y))
-        else:
-            other_rect = other
-        if this_rect.colliderect(other_rect): 
+        if not isinstance(otherRect, rect):
+            otherRect = otherRect.rotatedImage.get_rect(topleft=(otherRect.x, otherRect.y))
+      
+        if this_rect.colliderect(otherRect): 
             return True
         else:
             return False
