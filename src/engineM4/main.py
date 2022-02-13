@@ -197,10 +197,8 @@ class sprite():
             other_rect = other.rotatedImage.get_rect(topleft=(other.x, other.y))
         else:
             other_rect = other
-        if this_rect.colliderect(other_rect): 
-            return True
-        else:
-            return False
+        return this_rect.colliderect(other_rect)
+
 
     def moveForward(self, givenSpeed) -> None:
         self.x += math.cos(math.radians(self.rotation)) * givenSpeed;
@@ -324,10 +322,7 @@ class rect(pygame.Rect):
         if not isinstance(otherRect, rect):
             otherRect = otherRect.rotatedImage.get_rect(topleft=(otherRect.x, otherRect.y))
       
-        if this_rect.colliderect(otherRect): 
-            return True
-        else:
-            return False
+        return this_rect.colliderect(otherRect)
                                             
             
             
