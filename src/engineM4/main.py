@@ -1,5 +1,5 @@
 from __future__ import annotations
-from sys import exit
+import sys
 
 # This library is meant to be gray box. It is good to simply show the students what classes exist in the library, though I wouldn't get into the minutiae of HOW the objects perform their duties.
 # A common mistake is that students don't have this file in the same folder as their game file
@@ -184,9 +184,9 @@ class sprite():
         if self.visible == True:
             gameDisplay.blit(self.rotatedImage,(self.x,self.y))
             
-        for i in range(0, len(self.alarm)):
-            if self.alarm[i] >= 0:
-                self.alarm[i] -= 1
+        for x, i in enumerate(self.alarm):
+            if i >= 0:
+                self.alarm[x] -= 1
 
     # This function only takes one real parameter, another sprite. If this sprite ocupies any of the same space of the specified sprite, then it returns True.
     def collide(self, other) -> bool:
@@ -201,8 +201,8 @@ class sprite():
 
 
     def moveForward(self, givenSpeed) -> None:
-        self.x += math.cos(math.radians(self.rotation)) * givenSpeed;
-        self.y -= math.sin(math.radians(self.rotation)) * givenSpeed;
+        self.x += math.cos(math.radians(self.rotation)) * givenSpeed
+        self.y -= math.sin(math.radians(self.rotation)) * givenSpeed
 
     # This function removes this sprite from the spriteList and then destroys it
     def destroy(self) -> None:
@@ -225,20 +225,20 @@ def make_font(fonts, size) -> pygame.font.Font | pygame.font.SysFont:
     
 _cached_fonts = {}
 def get_font(font_preferences, size):
-    global _cached_fonts
     key = str(font_preferences) + '|' + str(size)
     font = _cached_fonts.get(key, None)
     if font == None:
+        global _cached_fonts
         font = make_font(font_preferences, size)
         _cached_fonts[key] = font
     return font
 
 _cached_text = {}
 def create_text(text, fonts, size, color):
-    global _cached_text
     key = '|'.join(map(str, (fonts, size, color, text)))
     image = _cached_text.get(key, None)
     if image == None:
+        global _cached_text
         font = get_font(fonts, size)
         image = font.render(text, True, color)
         _cached_text[key] = image
@@ -337,8 +337,7 @@ def runGame(backGroundColor):
         # allows the exit button to properly close the game
         if iterEvent.type == pygame.QUIT:
             pygame.quit()
-            exit()
-            break
+            sys.exit()
             return
 
 
