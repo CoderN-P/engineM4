@@ -291,7 +291,10 @@ class rect(pygame.Rect):
         self.filled = filled
         self.yStart = y
         self.xStart = x
-        
+        self.alarm = []
+        for i in range(0, 12):
+            self.alarm.append(-1)
+            
         self.leftEdge = self.x
         self.rightEdge = self.x + self.width
         self.topEdge = self.y
@@ -308,6 +311,9 @@ class rect(pygame.Rect):
         self.rightEdge = self.x + self.width
         self.topEdge = self.y
         self.bottomEdge = self.y + self.height
+        for x, i in enumerate(self.alarm):
+            if i >= 0:
+                self.alarm[x] -= 1
         if self.visible == True:
             pygame.draw.rect(gameDisplay, self.color, self)
 
