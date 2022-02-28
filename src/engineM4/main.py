@@ -1,5 +1,6 @@
 from __future__ import annotations
 import sys
+from copy import deepcopy
 
 # This library is meant to be gray box. It is good to simply show the students what classes exist in the library, though I wouldn't get into the minutiae of HOW the objects perform their duties.
 # A common mistake is that students don't have this file in the same folder as their game file
@@ -209,6 +210,11 @@ class sprite():
         spriteList.remove(self)
         del(self)
 
+    def clone(self):
+        clone = deepcopy(self)
+        spriteList.append(clone)
+        return clone
+
 
 
 # The following section can be ignored. It helps make text on the screen.
@@ -329,6 +335,12 @@ class rect(pygame.Rect):
             otherRect = otherRect.rotatedImage.get_rect(topleft=(otherRect.x, otherRect.y))
       
         return this_rect.colliderect(otherRect)
+
+    def copy(self):
+        clone = deepcopy(self)
+        shapeList.append(clone)
+        return clone
+    
                                             
             
             
