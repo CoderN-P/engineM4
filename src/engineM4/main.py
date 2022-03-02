@@ -330,11 +330,11 @@ class rect(pygame.Rect):
     def collide(self, otherRect) -> bool:
         if otherRect is None:
             return False
-        this_rect = self.rotatedImage.get_rect(topleft=(self.x, self.y))
+
         if not isinstance(otherRect, rect):
             otherRect = otherRect.rotatedImage.get_rect(topleft=(otherRect.x, otherRect.y))
       
-        return this_rect.colliderect(otherRect)
+        return self.colliderect(otherRect)
 
     def copy(self):
         clone = deepcopy(self)
