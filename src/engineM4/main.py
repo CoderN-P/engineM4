@@ -287,7 +287,9 @@ class text():
 class rect(pygame.Rect):
     def __init__(self, x, y, w, h, color=(0, 0, 0), filled=False):
         super().__init__((x, y), (w, h))
+        
         self.x = x
+        self.y = y
         self.width = w
         self.height = h
         self.hspeed = 0
@@ -297,9 +299,7 @@ class rect(pygame.Rect):
         self.filled = filled
         self.yStart = y
         self.xStart = x
-        self.alarm = []
-        for i in range(0, 12):
-            self.alarm.append(-1)
+        self.alarm = [-1]*12
             
         self.leftEdge = self.x
         self.rightEdge = self.x + self.width
@@ -310,9 +310,11 @@ class rect(pygame.Rect):
         shapeList.append(self)
  
     def update(self):
+        if 0 < self.vspeed < 1:
+            self.delay = 1 - self.vspeed
+        self.move_ip(self.hspeed, self.vspeed)
         self.x += self.hspeed
         self.y += self.vspeed
-        self.move((self.hspeed, self.vspeed))
         self.leftEdge = self.x
         self.rightEdge = self.x + self.width
         self.topEdge = self.y
