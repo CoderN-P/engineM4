@@ -1,20 +1,20 @@
-from __future__ import annotations
-import sys
-from copy import deepcopy
-
 # This library is meant to be gray box. It is good to simply show the students what classes exist in the library, though I wouldn't get into the minutiae of HOW the objects perform their duties.
 # A common mistake is that students don't have this file in the same folder as their game file
 
+from sys import exit
+
+import os # used for making folders
+
+from copy import deepcopy
 
 # double clicking on this file can be used to set up a new game folder
 if __name__ == "__main__":
 
     from shutil import copy
 
-    import os # used for making folders
     path = os.getcwd() # get current working directory
 
-    newFolderName = input("Enter the name of your new game")
+    newFolderName = input("Enter the name of your new game: ")
     newFolderName = "/"+newFolderName
 
     try:  
@@ -26,6 +26,36 @@ if __name__ == "__main__":
 
     baseFileName = os.path.basename(__file__)
     copy(__file__, path+newFolderName+"/"+baseFileName)
+    gameFile = open(path+newFolderName+"/"+newFolderName+".py", "x")
+    engineNameNoExtension = baseFileName.removesuffix(".py")
+    startingCode = f'''import {engineNameNoExtension} as e, math, random
+
+gameState = "begin"
+
+def beginState():
+    pass
+
+def playState():
+    pass
+
+def gameOverState():
+    pass
+
+while True:
+
+    if gameState == "begin":
+        beginState()
+
+    if gameState == "play":
+        playState()
+
+    if gameState == "game over":
+        gameOverState()
+
+    e.runGame((0,0,0))'''
+    
+    gameFile.write(startingCode)
+    gameFile.close()
 
 
 #bring in the pygame module
@@ -40,8 +70,9 @@ pygame.init()
 
 # This list is used to store all of the sprites in the game. In the main while loop of the game this list is iterated through to make every sprite run its update function.
 spriteList = []
-
 shapeList = []
+
+
 textList = []
 
 # These are some color vectors for quick reference.
@@ -61,22 +92,26 @@ screenW = 800
 screenH = 600
 
 #set up the game window.
-gameDisplay = pygame.display.set_mode((screenW,screenH))
+# if running from repl use fullscreen (this is much better for repl)
+if os.path.isdir("/home/runner") == True:
+    gameDisplay = pygame.display.set_mode((screenW,screenH),pygame.FULLSCREEN, 32)
+else:
+    gameDisplay = pygame.display.set_mode((screenW,screenH))
 
 # Set the text in the window bar.
 pygame.display.set_caption('Game')
 
 clock = pygame.time.Clock()
 
-def playSong(givenFileName, givenTimes) -> None:
+def playSong(givenFileName, givenTimes):
     # a parameter of -1 will make the song play on loop infinitely
     pygame.mixer.music.load(givenFileName)
     pygame.mixer.music.play(givenTimes)
 
-def stopSong() -> None:
+def stopSong():
     pygame.mixer.music.stop()
 
-def directionToPoint(primaryX, primaryY, targX, targY) -> int | float:
+def directionToPoint(primaryX, primaryY, targX, targY):
     rel_y = targY - primaryY
     rel_x = targX - primaryX
     return math.degrees(-math.atan2(rel_y, rel_x))
@@ -85,7 +120,7 @@ def directionToPoint(primaryX, primaryY, targX, targY) -> int | float:
 
 # keyboard manager
 class kbController():
-    def __init__(self) -> None:
+    def __init__(self):
         # keys is a list of buttons that are currently held down. This list is indexed by pygame's constant values for each key.
         # E.g.   keysPressed[K_RIGHT] == True    indicates that the right key is currently held down.
         # The list of constants that represent each key can be found at https://www.pygame.org/docs/ref/key.html#pygame.key.get_pressed
@@ -94,32 +129,32 @@ class kbController():
         self.previousKeysPressed = []
         self.keysPressed = pygame.key.get_pressed()
 
-    def update(self) -> None:
+    def update(self):
         self.previousKeysPressed = self.keysPressed
         self.keysPressed = pygame.key.get_pressed()
 
-    def singlePress(self, givenKey) -> bool:
+    def singlePress(self, givenKey):
         return self.keysPressed[givenKey] and not self.previousKeysPressed[givenKey]
 
-    def held(self, givenKey) -> bool:
+    def held(self, givenKey):
         return self.keysPressed[givenKey]
     
 # A global instance so students don't have to instiate their own keyboard manager
 kb = kbController()
             
 class mouseController():
-    def __init__(self) -> None:
+    def __init__(self):
         self.previouseMousePressed = []
         self.mousePressed = pygame.mouse.get_pressed()
         self.update()
 
-    def update(self) -> None:
+    def update(self):
         self.x = pygame.mouse.get_pos()[0]
         self.y = pygame.mouse.get_pos()[1]
         self.previouseMousePressed = self.mousePressed
         self.mousePressed = pygame.mouse.get_pressed()
 
-    def mouseHover(self, givenSprite) -> None | True:
+    def mouseHover(self, givenSprite):
         mouseX = pygame.mouse.get_pos()[0]
         mouseY = pygame.mouse.get_pos()[1]
         if givenSprite.leftEdge < mouseX < givenSprite.rightEdge:
@@ -127,10 +162,10 @@ class mouseController():
                 return True
 
     # parameters leftclick -> 0, middleclick -> 1, or rightclick -> 2
-    def globalClick(self, givenButton) -> bool:
+    def globalClick(self, givenButton):
         return self.mousePressed[givenButton] and not self.previouseMousePressed[givenButton]
 
-    def spriteClick(self, givenSprite, givenButton) -> bool:
+    def spriteClick(self, givenSprite, givenButton):
         return self.mouseHover(givenSprite) and self.globalClick(givenButton)
                 
 # A global instance so students don't have to instiate their own mouse Controller
@@ -141,7 +176,7 @@ mc = mouseController()
 class sprite():
     # sprites are constructed with a starting x and y coordinate and a string that specifies an image file such as "mario.png" .
     # The image file specified must be in the same folder as this code file.
-    def __init__(self, givenX, givenY, givenImage) -> None:
+    def __init__(self, givenX, givenY, givenImage):
         self.xStart = givenX
         self.yStart = givenY
         self.x = givenX
@@ -172,7 +207,7 @@ class sprite():
 
 
     # This function is called in runGame for every sprite in the spriteList
-    def update(self) -> None:
+    def update(self):
         self.x += self.hspeed
         self.y += self.vspeed
         self.leftEdge = self.x
@@ -185,30 +220,31 @@ class sprite():
         if self.visible == True:
             gameDisplay.blit(self.rotatedImage,(self.x,self.y))
             
-        for x, i in enumerate(self.alarm):
-            if i >= 0:
-                self.alarm[x] -= 1
+        for i in range(0, len(self.alarm)):
+            if self.alarm[i] >= 0:
+                self.alarm[i] -= 1
 
     # This function only takes one real parameter, another sprite. If this sprite ocupies any of the same space of the specified sprite, then it returns True.
-    def collide(self, other) -> bool:
-        if other is None:
+    def collide(self, other):
+        if other == None:
             return False
+
         this_rect = self.rotatedImage.get_rect(topleft=(self.x, self.y))
-        if not isinstance(other, rect):
-            other_rect = other.rotatedImage.get_rect(topleft=(other.x, other.y))
+        other_rect = other.rotatedImage.get_rect(topleft=(other.x, other.y))
+        if this_rect.colliderect(other_rect): 
+            return True
         else:
-            other_rect = other
-        return this_rect.colliderect(other_rect)
+            return False
 
-
-    def moveForward(self, givenSpeed) -> None:
-        self.x += math.cos(math.radians(self.rotation)) * givenSpeed
-        self.y -= math.sin(math.radians(self.rotation)) * givenSpeed
+    def moveForward(self, givenSpeed):
+        self.x += math.cos(math.radians(self.rotation)) * givenSpeed;
+        self.y -= math.sin(math.radians(self.rotation)) * givenSpeed;
 
     # This function removes this sprite from the spriteList and then destroys it
-    def destroy(self) -> None:
+    def destroy(self):
         spriteList.remove(self)
         del(self)
+        return None
 
     def clone(self):
         clone = deepcopy(self)
@@ -216,11 +252,10 @@ class sprite():
         return clone
 
 
-
 # The following section can be ignored. It helps make text on the screen.
 # This is from http://www.nerdparadise.com/programming/pygame/part5
 ############################################################
-def make_font(fonts, size) -> pygame.font.Font | pygame.font.SysFont:
+def make_font(fonts, size):
     available = pygame.font.get_fonts()
     # get_fonts() returns a list of lowercase spaceless font names 
     choices = map(lambda x:x.lower().replace(' ', ''), fonts)
@@ -231,7 +266,7 @@ def make_font(fonts, size) -> pygame.font.Font | pygame.font.SysFont:
     
 _cached_fonts = {}
 def get_font(font_preferences, size):
-    global _cached_text
+    global _cached_fonts
     key = str(font_preferences) + '|' + str(size)
     font = _cached_fonts.get(key, None)
     if font == None:
@@ -283,7 +318,8 @@ class text():
         del(self)
         return None
 
-#The rect object is a subclass of the pygame.Rect object # Created by Neel Parpia
+
+
 class rect(pygame.Rect):
     def __init__(self, x, y, w, h, color=(0, 0, 0), filled=False):
         super().__init__((x, y), (w, h))
@@ -342,12 +378,8 @@ class rect(pygame.Rect):
         clone = deepcopy(self)
         shapeList.append(clone)
         return clone
-    
-                                            
-            
-            
-        
 
+    
 # This function is responsible for rendering the game window and all visible objects.
 # Students should call this function inside of a while loop so that the game window is constantly updated.
 def runGame(backGroundColor):
@@ -357,7 +389,8 @@ def runGame(backGroundColor):
         # allows the exit button to properly close the game
         if iterEvent.type == pygame.QUIT:
             pygame.quit()
-            sys.exit()
+            exit()
+            break
             return
 
 
@@ -373,16 +406,17 @@ def runGame(backGroundColor):
 
     # Render every sprite.
     for iterSprite in spriteList:
-        iterSprite.update()
+            iterSprite.update()
 
     # Render every text
     for iterText in textList:
         iterText.update()
 
-    # Render every rect object
+    # Render every shape
     for iterShape in shapeList:
         iterShape.update()
         
 
     pygame.display.update()
     clock.tick(60)
+
