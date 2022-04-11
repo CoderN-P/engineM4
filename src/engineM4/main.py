@@ -1,3 +1,4 @@
+from __future__ import annotations
 # This library is meant to be gray box. It is good to simply show the students what classes exist in the library, though I wouldn't get into the minutiae of HOW the objects perform their duties.
 # A common mistake is that students don't have this file in the same folder as their game file
 
@@ -103,15 +104,15 @@ pygame.display.set_caption('Game')
 
 clock = pygame.time.Clock()
 
-def playSong(givenFileName, givenTimes):
+def playSong(givenFileName, givenTimes) -> None:
     # a parameter of -1 will make the song play on loop infinitely
     pygame.mixer.music.load(givenFileName)
     pygame.mixer.music.play(givenTimes)
 
-def stopSong():
+def stopSong() -> None:
     pygame.mixer.music.stop()
 
-def directionToPoint(primaryX, primaryY, targX, targY):
+def directionToPoint(primaryX, primaryY, targX, targY) -> float:
     rel_y = targY - primaryY
     rel_x = targX - primaryX
     return math.degrees(-math.atan2(rel_y, rel_x))
@@ -129,14 +130,14 @@ class kbController():
         self.previousKeysPressed = []
         self.keysPressed = pygame.key.get_pressed()
 
-    def update(self):
+    def update(self) -> None:
         self.previousKeysPressed = self.keysPressed
         self.keysPressed = pygame.key.get_pressed()
 
-    def singlePress(self, givenKey):
+    def singlePress(self, givenKey) -> bool:
         return self.keysPressed[givenKey] and not self.previousKeysPressed[givenKey]
 
-    def held(self, givenKey):
+    def held(self, givenKey) -> bool:
         return self.keysPressed[givenKey]
     
 # A global instance so students don't have to instiate their own keyboard manager
@@ -148,13 +149,13 @@ class mouseController():
         self.mousePressed = pygame.mouse.get_pressed()
         self.update()
 
-    def update(self):
+    def update(self) -> None:
         self.x = pygame.mouse.get_pos()[0]
         self.y = pygame.mouse.get_pos()[1]
         self.previouseMousePressed = self.mousePressed
         self.mousePressed = pygame.mouse.get_pressed()
 
-    def mouseHover(self, givenSprite):
+    def mouseHover(self, givenSprite) -> bool:
         mouseX = pygame.mouse.get_pos()[0]
         mouseY = pygame.mouse.get_pos()[1]
         if givenSprite.leftEdge < mouseX < givenSprite.rightEdge:
@@ -162,10 +163,10 @@ class mouseController():
                 return True
 
     # parameters leftclick -> 0, middleclick -> 1, or rightclick -> 2
-    def globalClick(self, givenButton):
+    def globalClick(self, givenButton) -> bool:
         return self.mousePressed[givenButton] and not self.previouseMousePressed[givenButton]
 
-    def spriteClick(self, givenSprite, givenButton):
+    def spriteClick(self, givenSprite, givenButton) -> bool:
         return self.mouseHover(givenSprite) and self.globalClick(givenButton)
                 
 # A global instance so students don't have to instiate their own mouse Controller
@@ -207,7 +208,7 @@ class sprite():
 
 
     # This function is called in runGame for every sprite in the spriteList
-    def update(self):
+    def update(self) -> None:
         self.x += self.hspeed
         self.y += self.vspeed
         self.leftEdge = self.x
@@ -225,7 +226,7 @@ class sprite():
                 self.alarm[i] -= 1
 
     # This function only takes one real parameter, another sprite. If this sprite ocupies any of the same space of the specified sprite, then it returns True.
-    def collide(self, other):
+    def collide(self, other) -> bool:
         if other == None:
             return False
 
@@ -236,15 +237,15 @@ class sprite():
         else:
             return False
 
-    def moveForward(self, givenSpeed):
+    def moveForward(self, givenSpeed) -> None:
         self.x += math.cos(math.radians(self.rotation)) * givenSpeed;
         self.y -= math.sin(math.radians(self.rotation)) * givenSpeed;
 
     # This function removes this sprite from the spriteList and then destroys it
-    def destroy(self):
+    def destroy(self) -> None:
         spriteList.remove(self)
         del(self)
-        return None
+
 
     def clone(self):
         clone = deepcopy(self)
@@ -255,7 +256,7 @@ class sprite():
 # The following section can be ignored. It helps make text on the screen.
 # This is from http://www.nerdparadise.com/programming/pygame/part5
 ############################################################
-def make_font(fonts, size):
+def make_font(fonts, size) -> pygame.font.Font | pygame.font.SysFont:
     available = pygame.font.get_fonts()
     # get_fonts() returns a list of lowercase spaceless font names 
     choices = map(lambda x:x.lower().replace(' ', ''), fonts)
@@ -265,7 +266,7 @@ def make_font(fonts, size):
     return pygame.font.Font(None, size)
     
 _cached_fonts = {}
-def get_font(font_preferences, size):
+def get_font(font_preferences, size) -> pygame.font.Font | pygame.font.SysFont:
     global _cached_fonts
     key = str(font_preferences) + '|' + str(size)
     font = _cached_fonts.get(key, None)
@@ -306,17 +307,16 @@ class text():
         self.visible = True
         textList.append(self)
 
-    def update(self):
+    def update(self) -> None:
         if self.visible == True:
             gameDisplay.blit(self.textImg, (self.x, self.y))
 
-    def changeText(self, givenString):
+    def changeText(self, givenString) -> None:
         self.textImg = create_text(givenString, font_preferences, self.size, self.color)
 
-    def destroy(self):
+    def destroy(self) -> None:
         textList.remove(self)
         del(self)
-        return None
 
 
 
@@ -345,7 +345,7 @@ class rect(pygame.Rect):
         self.visible = True
         shapeList.append(self)
  
-    def update(self):
+    def update(self) -> None:
         if 0 < self.vspeed < 1:
             self.delay = 1 - self.vspeed
         self.move_ip(self.hspeed, self.vspeed)
@@ -382,7 +382,7 @@ class rect(pygame.Rect):
     
 # This function is responsible for rendering the game window and all visible objects.
 # Students should call this function inside of a while loop so that the game window is constantly updated.
-def runGame(backGroundColor):
+def runGame(backGroundColor) -> None :
 
     for iterEvent in pygame.event.get():
 
