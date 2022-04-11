@@ -227,11 +227,14 @@ class sprite():
 
     # This function only takes one real parameter, another sprite. If this sprite ocupies any of the same space of the specified sprite, then it returns True.
     def collide(self, other) -> bool:
-        if other == None:
+        if other is None:
             return False
+        
+        if not isinstance(other, rect):
+            other = other.rotatedImage.get_rect(topleft=(other.x, other.y))
 
         this_rect = self.rotatedImage.get_rect(topleft=(self.x, self.y))
-        other_rect = other.rotatedImage.get_rect(topleft=(other.x, other.y))
+        
         if this_rect.colliderect(other_rect): 
             return True
         else:
