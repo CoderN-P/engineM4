@@ -10,21 +10,7 @@ while True:
   e.runGame((0, 0, 0) # Can be any tuple representing an RGB combination
   
  ```
- 
- ## Built in objects/classes
- - Sprite - (Helps for dealing with sprites)
-   - Example Usage
-   - ```python
-     character = e.sprite(x, y, "character.png")
-     ```
- - Rect - (A subclass of the pygame.Rect object. Helps for dealing with rectangles)
-   - Example Usage
-   - ```python
-     pipe = e.rect(x, y, w, h, color)
-     ```
- - kb (Keyboard controller - for managing keyboard input)
- - mc (Mouse controller - for managing mouse input)
- - Text (For rendering and managing text on the screen)
+ Take a look at the [docs](/docs) to learn more on how to use engineM4
 
 
 
