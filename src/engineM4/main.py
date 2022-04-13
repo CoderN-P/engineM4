@@ -92,7 +92,7 @@ violet = (238, 130, 238)
 screenW = 800
 screenH = 600
 
-#set up the game window.
+# Set up the game window.
 # if running from repl use fullscreen (this is much better for repl)
 if os.path.isdir("/home/runner") == True:
     gameDisplay = pygame.display.set_mode((screenW,screenH),pygame.FULLSCREEN, 32)
@@ -107,7 +107,7 @@ clock = pygame.time.Clock()
 def playSong(givenFileName, givenTimes) -> None:
     # a parameter of -1 will make the song play on loop infinitely
     pygame.mixer.music.load(givenFileName)
-    pygame.mixer.music.play(givenTimes)
+    pygame.mixer.music.play(int(givenTimes))
 
 def stopSong() -> None:
     pygame.mixer.music.stop()
