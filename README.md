@@ -4,6 +4,7 @@ This is a simple Pygame API wrapper. It was originally created by my CS teacher,
 # [Documentation](docs/index.md)
 
 
+<<<<<<< HEAD
  - Sprite - (Helps for dealing with sprites)
    - Example Usage
    - ```python
@@ -17,6 +18,14 @@ This is a simple Pygame API wrapper. It was originally created by my CS teacher,
  - kb (Keyboard controller - for managing keyboard input)
  - mc (Mouse controller - for managing mouse input)
  - Text (For rendering and managing text on the screen)
+=======
+while True:
+  ... # Your game code here
+  e.runGame((0, 0, 0) # Can be any tuple representing an RGB combination
+  
+ ```
+ Take a look at the [docs](/docs) to learn more on how to use engineM4
+>>>>>>> origin/main
 
 
 
