@@ -12,7 +12,7 @@ The built in variable `kb` is used for the keyboard controller.
 import engineM4 as e
 
 while True:
-    if e.kb.held(e.pygame.KEY_RIGHT): # KEY_LEFT is used for left arrow, KEY_UP is used for up arrow, and KEY_DOWN is used for down arrow
+    if e.kb.held(e.pygame.K_RIGHT): # K_LEFT is used for left arrow, K_UP is used for up arrow, and K_DOWN is used for down arrow
         ... # Do something here
     e.runGame((0,0,0))
 ```
