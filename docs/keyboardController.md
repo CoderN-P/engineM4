@@ -1,5 +1,5 @@
 # The Keyboard Controller
-The keyboard controller (kb) is used to register key presses. For the similar object called mouse controller (mc), see [this page](/docs/mouseController).
+The keyboard controller (kb) is used to register key presses. For the similar object called mouse controller (mc), see [this page](/docs/mouseController.md).
 ## Functions
 `singlePress(givenKey)` - Check is the given key was pressed once
 

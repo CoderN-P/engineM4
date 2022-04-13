@@ -27,4 +27,4 @@ There are built in functions for controlling pygame and engineM4
 
 `mc` - mouse controller object - The [mouse controller](/docs/mouseController.md).
 
-`kb` - keyboard controller object - The [keyboard controller](/docs/keyboardController).
+`kb` - keyboard controller object - The [keyboard controller](/docs/keyboardController.md).

@@ -1,5 +1,5 @@
 # The Mouse Controller
-The mouse controller (mc) is used to register mouse clicks. For the similar object called keyboard controller (kb), see [this page](/docs/keyboardController).
+The mouse controller (mc) is used to register mouse clicks. For the similar object called keyboard controller (kb), see [this page](/docs/keyboardController.md).
 ## Functions
 `mouseHover(givenSprite)` - Check if the mouse is hovering over the given sprite
 
