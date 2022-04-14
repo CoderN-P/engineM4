@@ -67,6 +67,8 @@ This creates a green pipe, `24` pixels wide and `64` pixels tall in the center o
 
 The `rect.alarm` is a list of integers that can be used for ticking events. **Default** - `[-1]*12`
 
+The values in the alarm list are automatically decremented every frame if they are greater than `0`
+
 #### Example Usage
 ```python
 import engineM4 as e
@@ -80,7 +82,6 @@ while True:
     pipeList.append(pipe.clone())
     pipe.alarm[0] = 10*60
     
-  pipe.alarm[0] -= 1
   e.runGame((0, 0, 0))
 ```
 
