@@ -35,18 +35,18 @@ e.font_preferences = [] # your fonts here
 ## Attributes
 
 ### Read and Write Attributes
-**NOTE**
-If you want to change the attributes you will need to use `text.changeText(givenString)`
+> **NOTE**
+> If you want to change the attributes you will need to use `text.changeText(givenString)`
 
-#### Example
-```python
-import engineM4 as e
-
-sampleText = e.text('Example text', 24, (255, 255, 255), e.screenW, e.screenH) # Renders 24px white text in the center of the screen
-
-sampleText.x = e.screenW/2
-sampleText.changeText(sampleText.textString) # Rerenders the text object on the screen with the updated attributes
-```
+> #### Example
+> ```python
+> import engineM4 as e
+>
+> sampleText = e.text('Example text', 24, (255, 255, 255), e.screenW, e.screenH) # Renders 24px white text in the center of the screen
+>
+> sampleText.x = e.screenW/2
+> sampleText.changeText(sampleText.textString) # Re-renders the text object on the screen with the updated attributes
+> ```
 
 
 `size` **int** | **float** The font size of the text in `px`
