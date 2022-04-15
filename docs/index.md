@@ -8,17 +8,20 @@ while True:
   e.runGame((0, 0, 0)) # Can be any tuple representing an RGB combination
   
  ```
+ 
  ## Built in objects/classes
  
- [Sprite](/docs/sprites.md) - The class for creating and using sprites  
+ [Sprite](/engineM4/sprites) - The class for creating and using sprites  
  
- [Rectangle](/docs/rectangle.md) - The wrapper class for pygame's rectangles 
+ [Rectangle](/engineM4/rectangle) - The wrapper class for pygame's rectangles 
  
- [Mouse Controller (mc)](/docs/mouseController.md) - Registers mouse clicks  
+ [Mouse Controller (mc)](/engineM4/mouseController) - Registers mouse clicks  
  
- [Keyboard Controller (kb)](/docs/keyboardController.md) - Registers key presses  
+ [Keyboard Controller (kb)](/engineM4/keyboardController) - Registers key presses  
  
- [Text](/docs/text.md) - Renders text on the screen
+ [Text](/engineM4/text) - Renders text on the screen
 
- ### [Built in functions and variables](/docs/functions.md)
+
+ ### [Built in functions and variables](/engineM4/functions)
+ 
  **Coming Soon**
