@@ -3,7 +3,7 @@ This is a simple Pygame API wrapper. It was originally created by my CS teacher,
 
  # Documentation
 
- Take a look at the [docs](/docs/index.md) to learn more on how to use engineM4
+ Take a look at the [docs](https://codern-p.github.io/engineM4) to learn more on how to use engineM4
 
 
 
