@@ -1,13 +1,21 @@
-# The Keyboard Controller
-The keyboard controller (kb) is used to register key presses. For the similar object called mouse controller (mc), see [this page](/docs/mouseController.md).
+---
+description: The keyboard controller (kb) is used to register key presses.
+---
+
+# Keyboard Controller
+
 ## Functions
+
 `singlePress(givenKey)` - Check is the given key was pressed once
 
 `held(givenKey)` - Check is the given key is being held
 
 For `givenKey`, you will have to use the pygame constant for the key you want. See the example for more info
+
 ### Example
-The built in variable `kb` is used for the keyboard controller.
+
+The built-in variable `kb` contains the KeyboardController class.
+
 ```python
 import engineM4 as e
 

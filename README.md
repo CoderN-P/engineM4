@@ -1,11 +1,21 @@
-# engineM4
-This is a simple Pygame API wrapper. It was originally created by my CS teacher, Max Mcintyre. However, I have added more code, fix some bugs, and decided to use github to version control it.
+---
+description: Why use engineM4 ?
+---
 
- # Documentation
+# Overview
 
- Take a look at the [docs](https://codern-p.github.io/engineM4) to learn more on how to use engineM4
+engineM4 is an easy to use API wrapper over pygame
 
+## Features
 
+* Has easy to use classes/objects that make game creation easier
+* No fussing over object management and storage (engineM4 takes care of that for you)
+* Automatically adapts to repl.it
+* Creates starter code for you when you create your games!
 
+Overall, engineM4 is great for students and beginners learning how to use pygame to create and design games.
 
- 
+## Quick Links
+
+* [Tutorial](engineM4/tutorial/)
+* [Api Reference](engineM4/api-reference/)
