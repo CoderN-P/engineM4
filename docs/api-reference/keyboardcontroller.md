@@ -6,13 +6,14 @@ description: The keyboard controller (kb) is used to register key presses.
 
 ## Functions
 
-`singlePress(givenKey)` - Check is the given key was pressed once
-
-`held(givenKey)` - Check is the given key is being held
+* `singlePress(givenKey)` - Check if the given key was pressed once
+* `held(givenKey)` - Check if the given key is being held
 
 For `givenKey`, you will have to use the pygame constant for the key you want. See the example for more info
 
-### Example
+<details>
+
+<summary>Example</summary>
 
 The built-in variable `kb` contains the KeyboardController class.
 
@@ -24,3 +25,5 @@ while True:
         ... # Do something here
     e.runGame((0,0,0))
 ```
+
+</details>
