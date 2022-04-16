@@ -1,18 +1,26 @@
+---
+description: The mouse controller (mc) is used to register mouse clicks.
+---
+
 # Mouse Controller
 
-The mouse controller (mc) is used to register mouse clicks. For the similar object called keyboard controller (kb), see [this page](keyboardcontroller.md).
+## Class Methods
 
-## Functions
+* `mouseHover(givenSprite)` - Check if the mouse is hovering over the given sprite
+* `globalClick(givenButton)` - Check if the mouse is clicked anywhere on the screen.
+* `spriteClick(givenSprite, givenButton)` - Check if the mouse was clicked on the given sprite.&#x20;
+* `update()` - Updates all of the MouseController's attributes
+  * This method is called with `e.runGame`
 
-`mouseHover(givenSprite)` - Check if the mouse is hovering over the given sprite
+{% hint style="info" %}
+&#x20;For `givenButton`, use `0` for leftclick, `1` for middleclick, and `2` for rightclick
+{% endhint %}
 
-`globalClick(givenButton)` - Check if the mouse click anywhere on the screen. For `givenButton`, use `0` for leftclick, `1` for middleclick, and `2` for rightclick
+<details>
 
-`spriteClick(givenSprite, givenButton)` - Check is the mouse clicked on the given sprite. Again, for `givenButton`, use `0` for leftclick, `1` for middleclick, and `2` for rightclick
+<summary>Example</summary>
 
-### Example
-
-The built in variable `mc` is used for the mouse controller.
+The built in variable `mc` stores the MouseController class
 
 ```python
 import engineM4 as e
@@ -23,3 +31,5 @@ while True:
         ... # Do something here
     e.runGame((0,0,0))
 ```
+
+</details>

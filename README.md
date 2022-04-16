@@ -18,4 +18,4 @@ Overall, engineM4 is great for students and beginners learning how to use pygame
 ## Quick Links
 
 * [Tutorial](engineM4/tutorial/)
-* [Api Reference](engineM4/api-reference/)
+* [Api Reference](docs/api-reference/)
