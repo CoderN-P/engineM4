@@ -324,7 +324,7 @@ class text():
 
 
 class rect(pygame.Rect):
-    def __init__(self, x, y, w, h, color=(0, 0, 0), filled=False):
+    def __init__(self, x, y, w, h, color=(0, 0, 0), filled=True, border_radius=None):
         super().__init__((x, y), (w, h))
         
         self.x = x
@@ -335,11 +335,13 @@ class rect(pygame.Rect):
         self.vspeed = 0
         self.rotation = 0
         self.scale = 1
-        self.filled = filled
         self.yStart = y
         self.xStart = x
         self.alarm = [-1]*12
-            
+        if not filled and not border_radius:
+            raise ValueError('Border radius is not specified! If filled=False, the border radius must be specified')
+        self.filled = filled
+        self.border_radius = border_radius
         self.leftEdge = self.x
         self.rightEdge = self.x + self.width
         self.topEdge = self.y
@@ -362,12 +364,16 @@ class rect(pygame.Rect):
             if i >= 0:
                 self.alarm[x] -= 1
         if self.visible == True:
-            pygame.draw.rect(gameDisplay, self.color, self)
+            if not self.filled:
+                pygame.draw.rect(gameDisplay, self.color, self, border_radius)
+            else:
+                pygame.draw.rect(gameDisplay, self.color, self)  
 
     def destroy(self) -> None:
         shapeList.remove(self)
         del (self)
-
+        
+    # Checks if the rectangle is colliding with another rectangle or sprite
     def collide(self, otherRect) -> bool:
         if otherRect is None:
             return False
@@ -377,8 +383,9 @@ class rect(pygame.Rect):
       
         return self.colliderect(otherRect)
 
+    # Clones the rectangle
     def copy(self):
-        clone = deepcopy(self)
+        clone = self.copy()
         shapeList.append(clone)
         return clone
 
@@ -422,4 +429,3 @@ def runGame(backGroundColor) -> None :
 
     pygame.display.update()
     clock.tick(60)
-
